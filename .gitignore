@@ -1,5 +1,13 @@
+*.bin
+_CTRClient/*.exe
+*.xdelta
 
-_ROM/CTR.bin
-_ROM/CTR_Online30.bin
-_ROM/CTR_Online60.bin
 py_to_exe.txt
+settings.ini
+
+# Main .gitignore file for python projects
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
