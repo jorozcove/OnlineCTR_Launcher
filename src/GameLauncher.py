@@ -13,6 +13,9 @@ URL_CLIENT = "https://online-ctr.com/wp-content/uploads/onlinectr_patches/client
 URL_XDELTA_30 = "https://online-ctr.com/wp-content/uploads/onlinectr_patches/ctr-u_Online30.xdelta"
 URL_XDELTA_60 = "https://online-ctr.com/wp-content/uploads/onlinectr_patches/ctr-u_Online60.xdelta"
 
+URL_SERVER = "https://online-ctr.com/wp-content/uploads/onlinectr_patches/server.zip"
+URL_DUCK_CONFIG = "https://online-ctr.com/wp-content/uploads/onlinectr_patches/duckstation_settings.zip"
+
 class GameLauncher:
     def __init__(self, root_folder, gui, settings):
         self.root_folder = root_folder
@@ -94,6 +97,10 @@ class GameLauncher:
         self._download_file(URL_XDELTA_60, "_XDELTA/ctr-u_Online60.xdelta")
         self.print_logs("Downloading client.exe")
         self.download_and_extract_zip(URL_CLIENT, "_CTRClient", "client.exe")
+        self.print_logs("Downloading server.zip")
+        self.download_and_extract_zip(URL_SERVER, "_CTRClient", "server.exe")
+        self.print_logs("Downloading duckstation settings")
+        self._download_file(URL_DUCK_CONFIG, "_DuckstationConfig/SCUS-94426.INI")
 
     def check_for_files(self):
         check = True
@@ -164,7 +171,7 @@ class GameLauncher:
                         self.print_logs("Private lobbies are not supported", 1)
                         self.print_logs("Exiting in 5 seconds...")
                         time.sleep(5)
-                        LauncherGUI.kill_process(self)
+                        kill_process()
                         break
                         
                     elif output.strip() != '':
