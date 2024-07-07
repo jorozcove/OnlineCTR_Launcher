@@ -7,6 +7,7 @@ import time
 import zipfile
 
 from src.utils import *
+from src.LauncherSettings import LauncherSettings
 
 
 URL_CLIENT = "https://online-ctr.com/wp-content/uploads/onlinectr_patches/client.zip"
@@ -21,18 +22,13 @@ class GameLauncher:
         self.root_folder = root_folder
         self.xdelta60_file = "ctr-u_Online60.xdelta"
         self.xdelta30_file = "ctr-u_Online30.xdelta"
-        self.rom_file_path = settings.game_rom  
         #os.path.join(root_folder, "_ROM", "CTR.bin")
         self.patched60_file_path = os.path.join(self.root_folder, "_ROM", "CTR_Online60.bin")
         self.patched30_file_path = os.path.join(self.root_folder, "_ROM", "CTR_Online30.bin")
         self.client_path = os.path.join(self.root_folder, "_CTRClient", "client.exe")
-        self.fast_boot = settings.fast_boot
-        self.fullscreen = settings.fullscreen
-        self.duckstation_path = settings.duckstation
-        self.frame_rate = settings.frame_rate
-        self.name = settings.name
         self.gui = gui
         self.patched_file = None
+        self.load_settings()
 
         if int(self.frame_rate) == 0:
             self.xdelta_file = self.xdelta30_file
@@ -42,6 +38,15 @@ class GameLauncher:
             self.patched_file = self.patched60_file_path
 
         self.xdelta_file_path = os.path.join(self.root_folder, "_XDELTA", self.xdelta_file)
+    
+    def load_settings(self):
+        settings = LauncherSettings()
+        self.rom_file_path = settings.game_rom 
+        self.fast_boot = settings.fast_boot
+        self.fullscreen = settings.fullscreen
+        self.duckstation_path = settings.duckstation
+        self.frame_rate = settings.frame_rate
+        self.name = settings.name
 
     def print_logs(self, text, format=0):
         # format 0 = normal; 1 = red

@@ -5,7 +5,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QLineEdit, QComboBox, QPushButton, QFileDialog
 
 class SettingsWindow(MovableWindow):
-    def __init__(self, launcher_settings):
+    def __init__(self, launcher_settings, game_launcher):
         super().__init__()
         self.launcher_settings = launcher_settings
         self.setWindowTitle("CTR Launcher Settings")
@@ -24,6 +24,8 @@ class SettingsWindow(MovableWindow):
         self.create_duckstation_input(layout)
         self.create_game_rom_input(layout)
         self.create_save_button(layout)
+
+        self.game_launcher = game_launcher
 
     def create_name_input(self, layout):
         self.name_label = QLabel("Player Name:")
@@ -111,6 +113,7 @@ class SettingsWindow(MovableWindow):
         self.launcher_settings.duckstation = self.duckstation_input.text()
         self.launcher_settings.game_rom = self.game_rom_input.text()
         self.launcher_settings.save_settings()
+        self.game_launcher.load_settings()
         self.close()
 
     def browse_duckstation(self):

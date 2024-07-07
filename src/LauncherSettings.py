@@ -3,6 +3,9 @@ import configparser
 class LauncherSettings:
     def __init__(self):
         self.config = configparser.ConfigParser(inline_comment_prefixes=";")
+        self.read_settings()
+    
+    def read_settings(self):
         try:
             self.config.read("settings.ini")
             self.name = self.config["SETTINGS"]["name"].strip('"')

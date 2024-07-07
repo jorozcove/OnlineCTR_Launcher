@@ -41,12 +41,14 @@ class LauncherGUI(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        self.gameLauncher = GameLauncher(root_folder, self, settings)
+
         self.window = self.create_main_window()
         self.logs_text = self.create_logs_textbox()
         self.create_launch_button()
         self.create_settings_button()
         self.create_exit_button()
-        self.progress_bar = self.create_progress_bar()
+        self.progress_bar = self.create_progress_bar()  
 
     def create_main_window(self):
         window = MovableWindow()
@@ -90,7 +92,7 @@ class LauncherGUI(QMainWindow):
         button_settings.setCursor(Qt.PointingHandCursor)
         
         launcher_settings = LauncherSettings()
-        self.second_window = SettingsWindow(launcher_settings)
+        self.second_window = SettingsWindow(launcher_settings, self.gameLauncher)
         button_settings.clicked.connect(self.second_window.show)
 
     def create_exit_button(self):
@@ -121,7 +123,7 @@ class LauncherGUI(QMainWindow):
         return progress_bar
 
     def launch_game_in_thread(self):
-        runnable = LauncherGameRunnable(GameLauncher(root_folder, self, settings))
+        runnable = LauncherGameRunnable(self.gameLauncher)
         QThreadPool.globalInstance().start(runnable)
 
     def show(self):
