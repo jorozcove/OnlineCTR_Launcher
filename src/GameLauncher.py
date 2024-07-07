@@ -8,6 +8,11 @@ import zipfile
 
 from src.utils import *
 
+
+URL_CLIENT = "https://online-ctr.com/wp-content/uploads/onlinectr_patches/client.zip"
+URL_XDELTA_30 = "https://online-ctr.com/wp-content/uploads/onlinectr_patches/ctr-u_Online30.xdelta"
+URL_XDELTA_60 = "https://online-ctr.com/wp-content/uploads/onlinectr_patches/ctr-u_Online60.xdelta"
+
 class GameLauncher:
     def __init__(self, root_folder, gui, settings):
         self.root_folder = root_folder
@@ -90,7 +95,6 @@ class GameLauncher:
         self.print_logs("Downloading client.exe")
         self.download_and_extract_zip(URL_CLIENT, "_CTRClient", "client.exe")
 
-    #Check if DuckStation and ROM exists
     def check_for_files(self):
         check = True
         if not os.path.exists(self.duckstation_path):
@@ -99,7 +103,12 @@ class GameLauncher:
         if not os.path.exists(self.rom_file_path):
             self.print_logs("Game ROM not found. Check the path in settings...", 1)
             check = False
-        
+        return check
+
+    def check_for_patch_files(self):
+        check = True
+        if not os.path.exists(self.xdelta_file_path) or not os.path.exists(self.client_path):
+            check = False
         return check
         
     def launch_game(self):
@@ -110,7 +119,7 @@ class GameLauncher:
         self.print_logs("Checking for updates...")
         is_update, version = check_for_updates()
         self.print_logs(f"OnlineCTR version: {version}")
-        if is_update:
+        if not self.check_for_patch_files() or is_update:
             self.download_updated_files(version)
             write_version_file(version)
             self._patch_game()

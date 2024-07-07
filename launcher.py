@@ -16,11 +16,6 @@ warnings.filterwarnings('ignore')
 
 LAUNCHER_VERSION = "1.3b2"
 
-URL_CLIENT = "https://online-ctr.com/wp-content/uploads/onlinectr_patches/client.zip"
-URL_XDELTA_30 = "https://online-ctr.com/wp-content/uploads/onlinectr_patches/ctr-u_Online30.xdelta"
-URL_XDELTA_60 = "https://online-ctr.com/wp-content/uploads/onlinectr_patches/ctr-u_Online60.xdelta"
-
-
 if getattr(sys, 'frozen', False):
     application_path = os.path.dirname(os.path.realpath(sys.executable))
 elif __file__:
