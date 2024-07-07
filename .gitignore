@@ -4,6 +4,7 @@ _CTRClient/*.exe
 
 py_to_exe.txt
 settings.ini
+*.INI
 
 # Main .gitignore file for python projects
 
