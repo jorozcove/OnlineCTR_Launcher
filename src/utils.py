@@ -1,6 +1,7 @@
 import requests
 import os
 import subprocess
+import psutil
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QPoint, QRunnable
@@ -30,7 +31,7 @@ def check_for_updates():
         if version != local_version:
             return True, version
         else:
-            return False, None
+            return False, version
     except Exception as e:
         print(e)
         return False, None
@@ -83,13 +84,10 @@ def check_for_patched_game(patched_file_path):
     else:
         return False
 
-# def get_news(self):
-#     # TEST IGNORE THIS
-#     url = "https://pastebin.com/raw/ARscS0et"
-#     response = requests.get(url)
-#     if response.status_code == 200:
-#         content = response.text
-#         self.print_logs(f"{content}/n")
+def kill_process():
+    for proc in psutil.process_iter(['pid', 'name']):
+        if proc.info['name'] in ['client.exe', 'duckstation-qt-x64-ReleaseLTCG.exe']:
+            proc.kill()
 
 class MovableWindow(QMainWindow):
     def __init__(self):

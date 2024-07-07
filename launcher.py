@@ -7,7 +7,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from src.utils import MovableWindow
+from src.utils import MovableWindow, kill_process
 from src.SettingsWindow import SettingsWindow
 from src.LauncherSettings import LauncherSettings 
 from src.GameLauncher import GameLauncher
@@ -127,13 +127,8 @@ class LauncherGUI(QMainWindow):
     def show(self):
         self.window.show()
 
-    def kill_process(self):
-        for proc in psutil.process_iter(['pid', 'name']):
-            if proc.info['name'] in ['client.exe', 'duckstation-qt-x64-ReleaseLTCG.exe']:
-                proc.kill()
-
     def close(self):
-        self.kill_process()
+        kill_process()
         self.destroy()
         sys.exit(0)
         
